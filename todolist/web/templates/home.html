@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h1 class="text-center my-5">Home</h1>
+{% if logged_user %}
+    <h3 class="text-center my-5">Welcome, {{logged_user}}! Start organizing your <a href="{% url 'tasks' %}">tasks</a>!</h3>
+{% else %}
+    <h3 class="text-center my-5">
+        Get organized and start managing your tasks! 
+        <a href="{% url 'login' %}">Log in</a>
+        or
+        <a href="{% url 'register' %}">Register</a>
+        now!
+    </h3>
+{% endif %}
+
+{% endblock %}

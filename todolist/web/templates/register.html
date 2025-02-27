@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h1 class="text-center my-5">Register</h1>
+
+<div class="container mt-4">
+    <div class="d-flex flex-column align-items-center">
+        <div class="form-control" style="width: 30%;">
+            <form action="{% url 'register' %}" method="post">
+                {% csrf_token %}
+
+                <label for="user_email">Email</label>
+                <input class="form-control" type="email" name="user_email" id="user_email" required>
+
+                <label for="user_name">Your name</label>
+                <input class="form-control" type="text" name="user_name" id="user_name" required placeholder="e.g. Guido Castillo">
+
+                <label for="user_password">Password</label>
+                <input class="form-control" type="password" name="user_password" id="user_password" required>
+
+                {% if message %}
+                    <span class="form-text fw-medium" style="color: red;">{{message}}</span>
+                {% endif %}
+
+                <div class="d-flex justify-content-center my-2">
+                    <button type="submit" class="btn btn-dark w-100">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

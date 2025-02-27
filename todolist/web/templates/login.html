@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h1 class="text-center my-5">Login</h1>
+
+<div class="container mt-4">
+    <div class="d-flex flex-column align-items-center">
+        <div class="form-control" style="width: 30%;">
+            <form action="{% url 'login' %}" method="post">
+                {% csrf_token %}
+
+                <label for="user_email">Email</label>
+                <input class="form-control" type="email" name="user_email" id="user_email" required>
+
+                <label for="user_password">Password</label>
+                <input class="form-control" type="password" name="user_password" id="user_password" required>
+
+                {% if message %}
+                    <span class="form-text fw-medium" style="color: red;">{{message}}</span>
+                {% endif %}
+
+                <div class="d-flex justify-content-center my-2">
+                    <button type="submit" class="btn btn-dark w-100">Login</button>
+                    <input type="hidden" name="redirect_url" value="{{redirect_url}}">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-4">
+    <div class="card mx-auto my-4" style="width: 30%;">
+        <div class="card-body text-center">
+            <h4 class="fw-medium">New user?</h4>
+            <div class="d-flex justify-content-center">
+                <a href="{% url 'register' %}" class="btn btn-dark mx-2 w-100">Create your account</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

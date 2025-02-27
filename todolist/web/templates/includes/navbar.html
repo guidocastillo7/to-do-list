@@ -1,0 +1,36 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'home' %}">To do list</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-link active" aria-current="page" href="{% url 'tasks' %}">Tasks</a>
+        </div>
+      </div>
+      <div class="ms-auto">
+          <ul class="navbar-nav d-flex flex-row align-items-center">
+              <li class="nav-item dropdown me-2">
+        {% if logged_user %}
+            {% if messages %}
+                {% for message in messages %}
+                    <span class="fst-italic fw-medium">{{message}}</span>
+                {% endfor %}
+            {% endif %}
+            <button class="btn btn-outline-light dropdown-toggle"
+              data-bs-toggle="dropdown" aria-expanded="false" type="button">
+                {{logged_user}}
+            </button>
+            <ul class="dropdown-menu">
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+          </li>
+        {% else %}
+          <a class="btn btn-outline-light" href="{% url 'login' %}">Login</a>
+        {% endif %}
+        </ul>
+       </div>
+    </div>
+  </nav>

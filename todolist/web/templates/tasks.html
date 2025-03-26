@@ -49,11 +49,17 @@
               </div>
               <div class="card-body">
                 <p class="card-text">{{task.description}}</p>
-                <div class="d-flex justify-content-end">
-                  <button class="btn btn-success" type="button">
-                    <i class="bi bi-check-lg"></i> Mark as completed
-                  </button>
-                </div>
+                {% if not task.completed %}
+                  <div class="d-flex justify-content-end">
+                    <form action="{% url 'mark_task_completed' %}" method="post">
+                      {% csrf_token %}
+                      <input type="hidden" name="task_id" value="{{task.id}}">
+                      <button class="btn btn-success" type="submit">
+                        <i class="bi bi-check-lg"></i> Mark as completed
+                      </button>
+                    </form>
+                  </div>
+                {% endif %}
               </div>
               <div class="card-footer text-muted">
                 Created at: {{task.created_at}}

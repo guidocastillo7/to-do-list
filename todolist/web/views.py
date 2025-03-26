@@ -71,6 +71,25 @@ def add_task(request):
     return redirect("tasks")
 
 
+def mark_task_completed(request):
+    if request.method == "POST":
+        task_id = int(request.POST.get("task_id"))
+
+        try:
+            update_task = (
+                supabase.table("task")
+                .update({"completed": True})
+                .eq("id", task_id)
+                .execute()
+            )
+
+        except Exception as e:
+            print(f"Error updating task: {e}")
+            messages.error(request, "Error updating task, please try again")
+
+    return redirect("tasks")
+
+
 def login_user(request):
     context = {}
 

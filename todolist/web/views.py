@@ -78,7 +78,7 @@ def mark_task_completed(request):
         try:
             update_task = (
                 supabase.table("task")
-                .update({"completed": True})
+                .update({"completed": True}) #Probar aqui de todas maneras si no me actualiza el campo con otro usuario
                 .eq("id", task_id)
                 .execute()
             )
@@ -86,6 +86,25 @@ def mark_task_completed(request):
         except Exception as e:
             print(f"Error updating task: {e}")
             messages.error(request, "Error updating task, please try again")
+
+    return redirect("tasks")
+
+
+def delete_task(request):
+    if request.method == "POST":
+        task_id = request.POST.get("task_id")
+
+        try:
+            delete_task = (
+                supabase.table("task")
+                .delete()
+                .eq("id", task_id)
+                .execute()
+            )
+
+        except Exception as e:
+            print(f"Error deleting task: {e}")
+            messages.error(request, "Error deleting task, please try again")
 
     return redirect("tasks")
 

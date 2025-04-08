@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from supabase import create_client
 from decouple import config
 from django.contrib import messages
+from datetime import datetime
 
 LOCAL_API_KEY = config("API_KEY")
 LOCAL_BASE_URL = config("BASE_URL")
@@ -55,13 +56,15 @@ def tasks(request):
 
 def add_task(request):
     if request.method == "POST":
+        date = datetime.now().strftime("%d/%B/%Y, %H:%M")
+
         try:
             new_task = supabase.table("task").insert({
                 "title": request.POST["title"],
-                "description": request.POST["description"]
+                "description": request.POST["description"],
+                "creation_date": date
             }).execute()
 
-            # Arreglaar esto de los mensajes pq me sale en el navbar siempre
             messages.success(request, "Task added succesfully!")
 
         except Exception as e:
@@ -78,7 +81,7 @@ def mark_task_completed(request):
         try:
             update_task = (
                 supabase.table("task")
-                .update({"completed": True}) #Probar aqui de todas maneras si no me actualiza el campo con otro usuario
+                .update({"completed": True})
                 .eq("id", task_id)
                 .execute()
             )
